@@ -9,7 +9,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
 	//ToDo: Send Email
 
-	header("Location: contact-thanks.php");  //redirect to contact-thanks.php
+	header("Location: contact.php?status=thanks");  //redirect to contact-thanks.php
 	exit;
 }
 ?>
@@ -27,45 +27,55 @@ include('include/header.php');
 
 			<h1>Contact</h1>
 
-			<p>I&rsquo;d love to hear from you. Complete the email to send me an Email.</p>
+			<?php 
+			if(isset($_GET["status"]) AND $_GET["status"] == "thanks") { ?>
 			
-			<form method="post" action="contact.php">
-				<table>
-					<tr>
-						<th>
-							<label for="name">Name</label>
-						</th>	
+			<p>Thanks for the email! I&rsquo;ll be in touch shortly.</p>
+	
+			<?php } 
+			else { ?>
 
-						<td>
-							<input type="text" name="name" id="name">
-						</td>
-					</tr>
+				<p>I&rsquo;d love to hear from you. Complete the email to send me an Email.</p>
+				
+				<form method="post" action="contact.php">
+					<table>
+						<tr>
+							<th>
+								<label for="name">Name</label>
+							</th>	
 
-					<tr>
-						<th>
-							<label for="email">Email</label>
-						</th>	
+							<td>
+								<input type="text" name="name" id="name">
+							</td>
+						</tr>
 
-						<td>
-							<input type="text" name="email" id="email">
-						</td>
-					</tr>
+						<tr>
+							<th>
+								<label for="email">Email</label>
+							</th>	
 
-					<tr>
-						<th>
-							<label for="message">Message</label>
-						</th>	
+							<td>
+								<input type="text" name="email" id="email">
+							</td>
+						</tr>
 
-						<td>
-							<textarea name="message" id="message"></textarea>
-						</td>
-					</tr>
-				 				
-				</table>
+						<tr>
+							<th>
+								<label for="message">Message</label>
+							</th>	
 
-				<input type="submit" value="send">
+							<td>
+								<textarea name="message" id="message"></textarea>
+							</td>
+						</tr>
+					 				
+					</table>
 
-			</form>
+					<input type="submit" value="send">
+
+				</form>
+			<?php 
+			} ?>
 
 		</div class = "wrapper">
 
