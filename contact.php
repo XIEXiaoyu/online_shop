@@ -1,3 +1,18 @@
+<?php
+if($_SERVER["REQUEST_METHOD"] == "POST")
+{
+	$name = $_POST["name"];
+	$email = $_POST["email"];
+	$message = $_POST["message"];
+	$email_body = "";
+	$email_body = $email_body . "Name: " . $name . "\n" . "Email: " . $email . "\n" . "Message: " . $message;
+
+	//ToDo: Send Email
+
+	header("Location: contact-thanks.php");  //redirect to contact-thanks.php
+	exit;
+}
+?>
 <?php 
 $pageTitle = "Contact Mike"; 
 
@@ -14,7 +29,7 @@ include('include/header.php');
 
 			<p>I&rsquo;d love to hear from you. Complete the email to send me an Email.</p>
 			
-			<form method="post" action="contact-process.php">
+			<form method="post" action="contact.php">
 				<table>
 					<tr>
 						<th>
