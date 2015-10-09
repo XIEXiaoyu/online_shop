@@ -1,9 +1,31 @@
 <?php
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
-	$name = $_POST["name"];
-	$email = $_POST["email"];
-	$message = $_POST["message"];
+	$name = trim($_POST["name"]);
+	$email = trim($_POST["email"]);
+	$message = trim($_POST["message"]);
+
+	if($name == "" OR $email == "" OR $message == "")
+	{
+		echo "You specify a value for name, email address and message.";
+		exit();
+	}
+
+	foreach($_POST as $value)
+	{
+		if(stripos($value, 'Content-Type:') !== FALSE)
+		{
+			echo "There was a problem with the information you entered.";
+			exit();
+		}
+	}
+
+	if($_POST["address"] != "")
+	{
+		echo "Your form submission has an error.";
+		exit();
+	}
+
 	$email_body = "";
 	$email_body = $email_body . "Name: " . $name . "\n" . "Email: " . $email . "\n" . "Message: " . $message;
 
@@ -66,6 +88,17 @@ include('include/header.php');
 
 							<td>
 								<textarea name="message" id="message"></textarea>
+							</td>
+						</tr>
+
+						<tr style="display: none;">
+							<th>
+								<label for="address">Address</label>
+							</th>	
+
+							<td>
+								<input type="text" name="address" id="address">
+								<p>Humans: Please leave this field blank.</p>
 							</td>
 						</tr>
 					 				
