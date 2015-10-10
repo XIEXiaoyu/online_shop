@@ -17,7 +17,7 @@
 				<li class="shirts <?php if($section == "shirts") 
 				{echo "on";} ?>"><a href="shirts.php">Shirts</a></li>
 				<li class="contact <?php if($section == "contacts"){echo "on";}?>"><a href="contact.php">Contact</a></li>
-				<li class="cart"><a href="#">Shopping Cart</a></li>
+				<li class="cart"><a target="paypal" href="https://www.paypal.com/cgi-bin/webscr?cmd=_cart&amp;business=6YG3WKHS6SDKY&amp;display=1">Shopping Cart</a></li>
 			</ul>
 
 		</div>

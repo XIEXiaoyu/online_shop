@@ -26,10 +26,31 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 		exit();
 	}
 
-	$email_body = "";
-	$email_body = $email_body . "Name: " . $name . "\n" . "Email: " . $email . "\n" . "Message: " . $message;
+	require_once 'include/phpmailer/class.phpmailer.php';
+	$mail = new PHPMailer();
+	if(!($mail->ValidateAddress($email)))
+	{
+		echo "You must specify a valid Email address.";
+		exit();
+	}
 
-	//ToDo: Send Email
+
+	$email_body = "";
+	$email_body = $email_body . "Name: " . $name . "<br>" . "Email: " . $email . "<br>" . "Message: " . $message;
+
+	//Send Email
+	$mail->SetFrom($email, $name);
+	$address = "xiejun04512@gmail.com";
+	$mail->AddAddress($address, "DaTouLi");
+
+	$mail->Subject = "DaTouLi Contact From Submission | " . $name;
+
+	$mail->MsgHTML($email_body);
+	if(!$mail->Send())
+	{
+		echo "There was a problem aending the emmail: " . $mail->ErrorInfo;
+		exit();
+	}
 
 	header("Location: contact.php?status=thanks");  //redirect to contact-thanks.php
 	exit;
