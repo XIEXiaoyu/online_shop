@@ -27,6 +27,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 	}
 
 	require_once 'include/phpmailer/class.phpmailer.php';
+	require_once 'include/phpmailer/class.smtp.php';
 	$mail = new PHPMailer();
 	if(!($mail->ValidateAddress($email)))
 	{
@@ -34,12 +35,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 		exit();
 	}
 
+	$mail->IsSMTP();
+	$mail->SMTPAuth = true;
+	$mail->Host = "smtp.postmarkapp.com";
+	$mail->Port = 25;
+	$mail->Username = "51928d85-6ee8-4a70-9830-a9bcc17cbe9b";
+	$mail->Password = "51928d85-6ee8-4a70-9830-a9bcc17cbe9b";
 
 	$email_body = "";
 	$email_body = $email_body . "Name: " . $name . "<br>" . "Email: " . $email . "<br>" . "Message: " . $message;
 
 	//Send Email
-	$mail->SetFrom($email, $name);
+	$mail->SetFrom("jun@xiejun.be", "DaTouLi");
 	$address = "xiejun04512@gmail.com";
 	$mail->AddAddress($address, "DaTouLi");
 
@@ -48,7 +55,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 	$mail->MsgHTML($email_body);
 	if(!$mail->Send())
 	{
-		echo "There was a problem aending the emmail: " . $mail->ErrorInfo;
+		echo "There was a problem sending the emmail: " . $mail->ErrorInfo;
 		exit();
 	}
 
