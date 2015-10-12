@@ -7,60 +7,64 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
 	if($name == "" OR $email == "" OR $message == "")
 	{
-		echo "You specify a value for name, email address and message.";
-		exit();
+		$error_message = "You specify a value for name, email address and message.";
+		 
 	}
 
 	foreach($_POST as $value)
 	{
 		if(stripos($value, 'Content-Type:') !== FALSE)
 		{
-			echo "There was a problem with the information you entered.";
-			exit();
+			$error_message = "There was a problem with the information you entered.";
 		}
 	}
 
 	if($_POST["address"] != "")
 	{
-		echo "Your form submission has an error.";
-		exit();
+		$error_message = "Your form submission has an error.";
 	}
 
 	require_once 'include/phpmailer/class.phpmailer.php';
 	require_once 'include/phpmailer/class.smtp.php';
+	// require 'include/phpmailer/PHPMailerAutoload.php';
 	$mail = new PHPMailer();
+
 	if(!($mail->ValidateAddress($email)))
 	{
-		echo "You must specify a valid Email address.";
-		exit();
+		$error_message = "You must specify a valid Email address.";
 	}
 
-	$mail->IsSMTP();
-	$mail->SMTPAuth = true;
-	$mail->Host = "smtp.postmarkapp.com";
-	$mail->Port = 25;
-	$mail->Username = "51928d85-6ee8-4a70-9830-a9bcc17cbe9b";
-	$mail->Password = "51928d85-6ee8-4a70-9830-a9bcc17cbe9b";
-
-	$email_body = "";
-	$email_body = $email_body . "Name: " . $name . "<br>" . "Email: " . $email . "<br>" . "Message: " . $message;
-
-	//Send Email
-	$mail->SetFrom("jun@xiejun.be", "DaTouLi");
-	$address = "xiejun04512@gmail.com";
-	$mail->AddAddress($address, "DaTouLi");
-
-	$mail->Subject = "DaTouLi Contact From Submission | " . $name;
-
-	$mail->MsgHTML($email_body);
-	if(!$mail->Send())
+	if(!isset($error_message))
 	{
-		echo "There was a problem sending the emmail: " . $mail->ErrorInfo;
-		exit();
-	}
+		$mail->IsSMTP();
+		//$mail->SMTPDebug = 2;
+		$mail->SMTPAuth = true;
+		$mail->Host = "smtp.postmarkapp.com";
+		$mail->Port = 25;
+		$mail->Username = "c29691df-be87-44dd-b104-fc498986ac9e";
+		$mail->Password = "c29691df-be87-44dd-b104-fc498986ac9e";
 
-	header("Location: contact.php?status=thanks");  //redirect to contact-thanks.php
-	exit;
+		$email_body = "";
+		$email_body = $email_body . "Name: " . $name . "<br>" . "Email: " . $email . "<br>" . "Message: " . $message;
+
+		//Send Email
+		$mail->SetFrom("jun@xiejun.be", "DaTouLi");
+		$address = "xiejun04512@gmail.com";
+		$mail->AddAddress($address, "DaTouLi");
+
+		$mail->Subject = "DaTouLi Contact From Submission | " . $name;
+
+		$mail->MsgHTML($email_body);
+		if($mail->Send())
+		{
+			header("Location: contact.php?status=thanks");  //redirect to contact-thanks.php
+			exit;
+		}
+		else
+		{
+			$error_message = "There was a problem sending the email: " . $mail->ErrorInfo;
+		}
+	}	
 }
 ?>
 <?php 
