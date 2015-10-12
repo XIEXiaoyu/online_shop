@@ -7,19 +7,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
 	if($name == "" OR $email == "" OR $message == "")
 	{
-		$error_message = "You specify a value for name, email address and message.";
+		$error_message = "You must specify a value for name, email address and message.";
 		 
 	}
 
-	foreach($_POST as $value)
+	if(!isset($error_message))
 	{
-		if(stripos($value, 'Content-Type:') !== FALSE)
+		foreach($_POST as $value)
 		{
-			$error_message = "There was a problem with the information you entered.";
+			if(stripos($value, 'Content-Type:') !== FALSE)
+			{
+				$error_message = "There was a problem with the information you entered.";
+			}
 		}
 	}
 
-	if($_POST["address"] != "")
+	if(!isset($error_message) && ($_POST["address"] != ""))
 	{
 		$error_message = "Your form submission has an error.";
 	}
@@ -29,7 +32,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 	// require 'include/phpmailer/PHPMailerAutoload.php';
 	$mail = new PHPMailer();
 
-	if(!($mail->ValidateAddress($email)))
+
+	if(!isset($error_message) && !$mail->ValidateAddress($email))
 	{
 		$error_message = "You must specify a valid Email address.";
 	}
@@ -67,6 +71,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 	}	
 }
 ?>
+
 <?php 
 $pageTitle = "Contact Mike"; 
 
@@ -88,9 +93,19 @@ include('include/header.php');
 	
 			<?php } 
 			else { ?>
+			
+				<?php  
+				if(!isset($error_message))
+				{
+					echo '<p>I&rsquo;d love to hear from you. Complete the email to send me an Email.</p>';
+				}
+				else
+				{
+					echo '<p class="message">' . $error_message . '</p>';
+				}
+				?>
 
-				<p>I&rsquo;d love to hear from you. Complete the email to send me an Email.</p>
-				
+
 				<form method="post" action="contact.php">
 					<table>
 						<tr>
