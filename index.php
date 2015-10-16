@@ -1,17 +1,21 @@
 <?php 
+require_once("include/config.php");
+?>
+
+<?php 
 $pageTitle = "Unique T-shirt designed by a frog";
 $section = "shrits";
 
-include('include/header.php'); 
+include(BASE_PATH . 'include/header.php'); 
 ?>
 
 		<div class="section banner">
 
 			<div class="wrapper">
 
-				<img class="hero" src="img/mike-the-frog.png" alt="Mike the Frog says:">
+				<img class="hero" src="<?php echo BASE_URL; ?>img/mike-the-frog.png" alt="Mike the Frog says:">
 				<div class="button">
-					<a href="shirts.php">
+					<a href="<?php echo BASE_URL; ?>shirts.php">
 						<h2>Hey, I&rsquo;m Mike!</h2>
 						<p>Check Out My Shirts</p>
 					</a>
@@ -26,7 +30,7 @@ include('include/header.php');
 
 				<h2>Mike&rsquo;s Latest Shirts</h2>
 
-				<?php include("include/products.php"); ?>
+				<?php include(BASE_PATH . 'include/products.php'); ?>
 
 				<ul class="products">
 				<?php 
@@ -48,4 +52,4 @@ include('include/header.php');
 			</div>
 
 		</div>
-<?php include('include/footer.php')?>
+<?php include(ROOT_PATH	. 'include/footer.php')?>

@@ -1,4 +1,6 @@
-<?php include("include/products.php"); 
+<?php
+require_once("../include/config.php"); 
+require_once(ROOT_PATH . "include/products.php"); 
 
 if(isset($_GET['id']))
 {
@@ -12,14 +14,14 @@ if(isset($_GET['id']))
 
 if(!isset($product))
 {
-	header('Location: shirts.php');
+	header('Location: ' . BASE_URL . 'shirts/');
 	exit();
 }
 
 $section = "shirts";
 $pageTitle = $product['name'];
 
-include('include/header.php'); ?>
+include(ROOT_PATH . 'include/header.php'); ?>
 
 
 	<div class="section page">
@@ -27,12 +29,12 @@ include('include/header.php'); ?>
 		<div class="wrapper">
 
 			<div class="breadcrumb">
-				<a href="shirts.php">Shirts</a> &gt; <?php echo $product['name']; ?>
+				<a href="<?php echo BASE_URL; ?>shirts/">Shirts</a> &gt; <?php echo $product['name']; ?>
 			</div>
 
 			<div class="shirt-picture">
 				<span>
-					<img src="<?php echo $product['img']; ?>" alt="<?php echo $proecut['name']; ?>">
+					<img src="<?php echo BASE_URL. $product['img']; ?>" alt="<?php echo $proecut['name']; ?>">
 				</span>		
 			</div>
 
@@ -70,4 +72,4 @@ include('include/header.php'); ?>
 	</div>
 
 
-<?php include("include/footer.php"); ?>
+<?php include(ROOT_PATH . "include/footer.php"); ?>

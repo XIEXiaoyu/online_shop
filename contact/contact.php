@@ -1,4 +1,8 @@
 <?php
+require_once("../include/config.php");
+?>
+
+<?php
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
 	$name = trim($_POST["name"]);
@@ -27,8 +31,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 		$error_message = "Your form submission has an error.";
 	}
 
-	require_once 'include/phpmailer/class.phpmailer.php';
-	require_once 'include/phpmailer/class.smtp.php';
+	require_once (ROOT_PATH . 'include/phpmailer/class.phpmailer.php');
+	require_once (ROOT_PATH . 'include/phpmailer/class.smtp.php');
 	// require 'include/phpmailer/PHPMailerAutoload.php';
 	$mail = new PHPMailer();
 
@@ -44,9 +48,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 		//$mail->SMTPDebug = 2;
 		$mail->SMTPAuth = true;
 		$mail->Host = "smtp.postmarkapp.com";
-		$mail->Port = 25;
-		$mail->Username = "c29691df-be87-44dd-b104-fc498986ac9e";
-		$mail->Password = "c29691df-be87-44dd-b104-fc498986ac9e";
+		$mail->Port = 2525;
+		$mail->Username = "51928d85-6ee8-4a70-9830-a9bcc17cbe9b";
+		$mail->Password = "51928d85-6ee8-4a70-9830-a9bcc17cbe9b";
 
 		$email_body = "";
 		$email_body = $email_body . "Name: " . $name . "<br>" . "Email: " . $email . "<br>" . "Message: " . $message;
@@ -61,7 +65,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 		$mail->MsgHTML($email_body);
 		if($mail->Send())
 		{
-			header("Location: contact.php?status=thanks");  //redirect to contact-thanks.php
+			header("Location: " . ROOT_URL . "contact/?status=thanks");  //redirect to contact-thanks.php
 			exit;
 		}
 		else
@@ -77,7 +81,7 @@ $pageTitle = "Contact Mike";
 
 $section = "contacts";
 
-include('include/header.php'); 
+include(ROOT_PATH . 'include/header.php'); 
 ?>
 
 	<div class="section page">
@@ -106,7 +110,7 @@ include('include/header.php');
 				?>
 
 
-				<form method="post" action="contact.php">
+				<form method="post" action="<?php echo ROOT_URL; ?>contact/">
 					<table>
 						<tr>
 							<th>
@@ -162,5 +166,5 @@ include('include/header.php');
 	</div>
 
 <?Php 
-include('include/footer.php'); 
+include(ROOT_PATH . 'include/footer.php'); 
 ?>
