@@ -36,13 +36,13 @@ if($end > $total_products)
 
 $products = get_products_subset($start, $end);
 
-$pageTitle = "Mike's Full Catatlog of Shirts";
+$pageTitle = "Pear's Full Catatlog of Shirts";
 $section = "shirts";
 include(ROOT_PATH . 'include/header.php'); 
 ?>
 	<div class="section shirts page">
 		<div class="wrapper">
-			<h1>Mike&rsquo; Full Catalog of Shirts</h1>
+			<h1>Pear&rsquo; Full Catalog of Shirts</h1>
 
 			<?php include(ROOT_PATH . "include/partial/list_navigation.html.php"); ?>
 
